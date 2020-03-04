@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BondCalculator</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        .div-footer {
+            display: flex;
+            justify-content: space-evenly;
+            flex-direction: row;
+        }
+
+        .footerr {
+            background-color: aliceblue;
+            position: absolute;
+            bottom: 0px;
+            width: 100%;
+            height: auto; /* Here fix the height of your footer */
+          
+            margin-top: 6px;
+        }
+
+        .img:hover {
+            transform: scale(1.5);
+        }
+
+        .footer-p {
+            color: #7783AD;
+            text-align: center;
+        }
+
+        @@media only screen and (max-width:600px) {
+            .div-footer {
+                display: flex;
+                justify-content: space-evenly;
+                flex-direction: column;
+            }
+
+            .footerr {
+                background-color: aliceblue;
+                position: absolute;
+                bottom: 0px;
+                width: 100%;
+                
+                margin-top: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header style="background-color:#196A70;">
+
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3" style="background-color:#196A70">
+            <div>
+                <img src="~/images/Stack 1.png" alt="Site Logo" style="width:4em;height:4em;">
+                <a class="navbar-brand" asp-area="" asp-controller="Calculation" asp-action="Index"> Online Bond Calculator</a>
+            </div>
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark img" asp-area="" asp-controller="Calculation" asp-action="Index">Home</a>
+                        </li>
+                      
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+            <div>
+                <hr style="margin-bottom:1em" />
+            </div>
+        </main>
+    </div>
+    <div>
+
+        <hr />
+    </div>
+    <div>
+
+        <hr />
+    </div>
+    @{
+        var size = "1.5em";
+    }
+    <footer class="footerr">
+
+        <div class="div-footer">
+
+            <div style="align-content:center;justify-content:center">
+                <h2 style="color:#7783AD">C<i>trading</i></h2>
+            </div>
+
+            <div>
+                <p class="footer-p">
+                    <h3 class="footer-p">Online Bond Calculator</h3>
+                </p>
+                <p class="footer-p">
+                    Developed and designed by Tanyaradzwa Chikopera.
+                </p>
+                <p class="footer-p">Icons from Pichon</p>
+            </div>
+
+            <div style="text-align:left">
+                <p class="footer-p" style="font-size:1em;text-align:left;"><strong><u>Get in touch</u></strong></p>
+                <img class="img" src="~/images/dialer.png" alt="dialer icon" style="height:@size;width:@size" />
+                Contact 0653125518<br />
+
+                <img class="img" src="~/images/whatsapp.png" style="height:@size;width:@size" alt="dialer icon" />
+                Whatsapp 0653125518<br />
+
+                <img class="img" style="height:@size;width:@size" src="~/images/linkedin.png" alt="dialer icon" />
+                <a href="https://linkedin.com/in/tanyaradzwa-chikopera-65a09798" class="img">Linked-in Profile</a><br />
+
+                <img class="img" style="height:@size;width:@size" src="~/images/github.png" alt="dialer icon" />
+                <a href="https://github.com/CHIKOPERA" class="img">Github</a>
+            </div>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

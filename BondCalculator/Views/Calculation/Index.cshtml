@@ -1,0 +1,262 @@
+﻿@model BondCalculator.Models.Calculation.CalculationViewModel;
+@using System;
+
+@{
+    ViewData["Title"] = "Calculation";
+}
+
+<html>
+<head>
+    <style>
+        input {
+        }
+
+        label {
+            background-color: transparent;
+            font-size: 1.4em;
+            border-style: none;
+            margin-top: 2%;
+        }
+
+        text {
+            background-color: pink;
+        }
+
+        .inputt {
+            width: 16em;
+            border-style: none;
+            border-bottom: 1px solid #1BBBC6;
+            margin: 2px;
+            font-size: 2em;
+            background-color: transparent;
+            font-family: 'Century Gothic';
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .div-left {
+            width: 100%;
+            text-align: left;
+        }
+
+        .div-right {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            align-content: center;
+            border-width: 3px;
+           
+        
+            border-radius: 10%;
+        }
+
+        .column-left {
+            width: 60%;
+        }
+
+        .column-right {
+            width: 40%;
+            height: 100%;
+            text-align: center;
+            align-content: center;
+            background-color: #1BBBC6;
+             border-width: 2px;
+            box-shadow: 23px;
+            border-radius: 10%;
+            
+        }
+
+        @@media only screen and (max-width:600px) {
+            .inputt {
+                width: 16em;
+                border-style: none;
+                border-bottom: 1px solid #1BBBC6;
+                margin: 2px;
+                font-size: 0.8em;
+                background-color: transparent;
+                font-family: 'Century Gothic';
+            }
+
+            .column-right {
+                width: 40%;
+                height: 50%;
+                text-align: center;
+                align-content: center;
+                background-color: #1BBBC6;
+                border-radius: 10%;
+            }
+
+            .column-left {
+                width: 60%;
+            }
+
+            label {
+                background-color: transparent;
+                font-size: 0.9em;
+                border-style: none;
+                margin-top: 2%;
+            }
+
+            .table-calculations {
+                font-size: 0.5em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+   
+    <div>
+        <header>
+            <h1  style="color:#7783AD"; font-family:'Century Gothic'; > Online bond calculator</h1>
+        </header>
+        <p style="color:#7783AD">
+            This calculator can help you determine the monthly repayments based on the bond amount, rate and payment period
+        </p>
+    </div>
+    <div class="main-container">
+        <table>
+            <tr>
+                <td class="column-left">
+                    <div class="div-left" id="div-input">
+                        <!--Form Inputs-->
+                        @Html.ValidationSummary()
+                        @using (Html.BeginForm("Index", "Calculation", FormMethod.Post))
+                        {
+                            <div class="form-group">
+                                <div>
+
+                                    @Html.LabelFor(a => a.Name)<br />
+                                    @Html.TextBoxFor(a => a.Name, new { @class = "inputt", @required = "required" })
+                                </div>
+                                <div>
+                                    @Html.LabelFor(a => a.Principle)<br />
+                                    @Html.TextBoxFor(p => p.Principle, new { @class = "inputt", type = "number", @required = "required", @value = "" })
+                                </div>
+                                <div>
+
+                                    @Html.LabelFor(a => a.Deposit)<br />
+                                    @Html.TextBoxFor(a => a.Deposit, new { @class = "inputt", type = "number", @required = "required" })
+                                </div>
+                                <div>
+
+                                    @Html.LabelFor(a => a.BondTerm)<br />
+                                    @Html.TextBoxFor(a => a.BondTerm, new { @class = "inputt", type = "number", required = "required" })
+                                </div>
+                                <div>
+
+                                    @Html.LabelFor(a => a.Rate)<br />
+                                    @Html.TextBoxFor(a => a.Rate, new { @class = "inputt", type = "number", required = "required" })
+                                </div>
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-success btn-primary">Calculate</button>
+                            </div>
+                        }
+                    </div>
+                </td>
+                <td class="column-right">
+                    <div class="div-right">
+                        <!--Output Display-->
+                        <div>
+
+                            <img src="~/images/stack2.png" alt="MoneyLogo" />
+                        </div>
+                        <br />
+                        <div>
+                            <label>Monthly Payment</label>
+                            <h1>@Model.MonthlyPayment</h1>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div style="margin-top:2em">
+        <details>
+            <summary>Calculation Break down</summary>
+            <p>Find out how much you are paying for you interest and capital with the armotization table below</p>
+            @if (Model.AmotValues != null)
+            {
+                <div>
+                    <table class="table table-calculations" style="height:50em">
+                        <thead>
+                            <tr>
+                                <td><strong>Year</strong></td>
+                                <td><strong>InterestPayment</strong></td>
+                                <td><strong>Capital Payment</strong></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var amot in Model.AmotValues)
+                            {
+                                <tr>
+                                    <td>
+                                        @amot.Year
+                                    </td>
+                                    <td>
+                                        @amot.IntPayment
+                                    </td>
+                                    <td>
+                                        @amot.CapitalPayment
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            @if (Model.AmotValues == null)
+            {
+                <div style="border:0.1em solid #1BBBC6;">
+                    <div style="display:flex;flex-direction:row;justify-content:flex-start">
+                        <img src="~/images/frown.png" alt="Sad face" style="float:left" />
+                        <h2 style="color:#1BBBC6; float:right">No Calculation yet </h2>
+                    </div>
+                    <p style="color:#1BBBC6;">Please make a new application to see how you payments will be broken down each each year </p>
+                </div>
+            }
+        </details>
+    </div>
+
+    <div>
+        <details style="margin-top:2em">
+            <summary>Calculcations by other users</summary>
+            <div>
+                <table class="table table-calculations">
+                    <thead>
+                        <tr>
+                            <td>Calculation Name</td>
+                            <td>Date Calculated</td>
+                            <td>Principle</td>
+                            <td>Initial Deposit</td>
+                            <td>Loan Period</td>
+                            <td>Interest Rate</td>
+                            <td>Monthly Payments</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var calculation in Model.Calculations)
+                        {
+                            <tr>
+                                <td>@calculation.Name</td>
+                                <td>@calculation.CalculationDate</td>
+                                <td>@calculation.Principle</td>
+                                <td>@calculation.Deposit</td>
+                                <td>@calculation.BondTerm</td>
+                                <td>@calculation.Rate</td>
+                                <td>@Math.Round(calculation.MonthlyPayment, 2)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </details>
+    </div>
+</body>
+</html>
